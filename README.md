@@ -72,8 +72,8 @@ Anda dapat memodifikasi metode `calculateCost` untuk menggunakan rumus lain jika
    - Pilih opsi 4 dan masukkan ID paket yang ingin dihapus.
 
 ## Pengembang
-- **Nama**: [Nama Anda]
-- **Email**: [Email Anda]
+- **Nama**: [RAMAHAN & Revaldo Ramadan]
+
 
 ## Lisensi
 Proyek ini menggunakan lisensi MIT. Silakan lihat file LICENSE untuk informasi lebih lanjut.
