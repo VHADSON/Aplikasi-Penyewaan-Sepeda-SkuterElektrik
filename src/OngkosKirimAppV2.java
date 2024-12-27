@@ -4,6 +4,7 @@
  * menggunakan Java Swing. Aplikasi memiliki fitur login sederhana dan kalkulasi
  * biaya pengiriman berdasarkan berat barang.
  *@author RAMAHAN & Revaldo Ramadana
+ *@version 1.0
  */
 public class AplikasiOngkir {
     public static void main(String[] args) {
