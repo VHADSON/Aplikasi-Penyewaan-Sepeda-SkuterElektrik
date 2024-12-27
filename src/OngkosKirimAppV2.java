@@ -1,10 +1,17 @@
 /**
+ * @author RAMAHAN & Revaldo Ramadana
+ * @version 1.0
  * AplikasiOngkir
+ * 
  * Program ini merupakan aplikasi untuk mengecek ongkos kirim berbasis GUI
  * menggunakan Java Swing. Aplikasi memiliki fitur login sederhana dan kalkulasi
  * biaya pengiriman berdasarkan berat barang.
- *@author RAMAHAN & Revaldo Ramadana
- *@version 1.0
+ *
+ * Fitur yang dimiliki:
+ * - Login menggunakan Email (harus memiliki @gmail.com) & Password
+ * - Memasukkan informasi alamat asal, tujuan, berat barang
+ * - Kalkulasi biaya pengiriman berdasarkan berat barang
+ *
  */
 public class AplikasiOngkir {
     public static void main(String[] args) {
@@ -32,7 +39,7 @@ class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Panel kiri dengan gradien dan label selamat datang
+        // Panel kiri dengan gradien dan label WELCOME
         JPanel leftPanel = new GradientPanel(new Color(255, 169, 76), new Color(255, 71, 140));
         leftPanel.setLayout(new GridBagLayout());
         JLabel leftLabel = new JLabel("WELCOME");
@@ -53,6 +60,7 @@ class LoginFrame extends JFrame {
         lblEmail.setForeground(Color.BLACK);
         rightPanel.add(lblEmail, gbc);
 
+        // Textfield Email
         gbc.gridy = 1;
         tfEmail = new RoundedTextField(15);
         rightPanel.add(tfEmail, gbc);
@@ -63,6 +71,7 @@ class LoginFrame extends JFrame {
         lblPassword.setForeground(Color.BLACK);
         rightPanel.add(lblPassword, gbc);
 
+        // Textfield Password
         gbc.gridy = 3;
         pfPassword = new RoundedPasswordField(15);
         pfPassword.setEchoChar('*');
@@ -72,7 +81,7 @@ class LoginFrame extends JFrame {
         gbc.gridy = 4;
         cbShowPassword = new JCheckBox("Show Password");
         cbShowPassword.setFont(new Font("Arial", Font.BOLD, 10));
-        cbShowPassword.setForeground(new Color(0, 211, 13));
+        cbShowPassword.setForeground(new Color(211, 0, 81));
         cbShowPassword.setOpaque(false);
         cbShowPassword.addActionListener(e -> pfPassword.setEchoChar(cbShowPassword.isSelected() ? '\0' : '*'));
         rightPanel.add(cbShowPassword, gbc);
@@ -145,6 +154,7 @@ class MainFrame extends JFrame {
         lblAsal.setForeground(Color.BLACK);
         rightPanel.add(lblAsal, gbc);
 
+        // Textfield alamat asal
         gbc.gridy = 1;
         tfAsal = new RoundedTextField(15);
         rightPanel.add(tfAsal, gbc);
@@ -155,6 +165,7 @@ class MainFrame extends JFrame {
         lblTujuan.setForeground(Color.BLACK);
         rightPanel.add(lblTujuan, gbc);
 
+        // Textfield alamat tujuan
         gbc.gridy = 3;
         tfTujuan = new RoundedTextField(15);
         rightPanel.add(tfTujuan, gbc);
@@ -165,6 +176,7 @@ class MainFrame extends JFrame {
         lblBerat.setForeground(Color.BLACK);
         rightPanel.add(lblBerat, gbc);
 
+        // Textfield berat barang
         gbc.gridy = 5;
         tfBerat = new RoundedTextField(15);
         rightPanel.add(tfBerat, gbc);
@@ -176,9 +188,10 @@ class MainFrame extends JFrame {
         btnCekOngkir.setPreferredSize(new Dimension(173, 25));
         btnCekOngkir.setForeground(new Color(255,246,233));
         lblHarga = new JLabel("Harga: -");
-        lblHarga.setForeground(new Color(0, 211, 13));
+        lblHarga.setForeground(new Color(211, 0, 81));
         rightPanel.add(btnCekOngkir, gbc);
 
+        // Label menunjukkan harga/biaya ongkos kirim
         gbc.gridy = 7;
         rightPanel.add(lblHarga, gbc);
 
