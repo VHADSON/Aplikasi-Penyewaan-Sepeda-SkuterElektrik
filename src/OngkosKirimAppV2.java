@@ -18,6 +18,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AplikasiOngkir {
+    /**
+    * Metode utama untuk menjalankan aplikasi
+    * @param args argumen baris perintah
+    */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
@@ -33,6 +37,9 @@ class LoginFrame extends JFrame {
     private JCheckBox cbShowPassword;
     private JButton btnLogin;
 
+    /**
+     * Konstruktor untuk LoginFrame.
+     */
     public LoginFrame() {
         // Pengaturan dasar frame
         setTitle("https://AplikasiCekOnkosKirim.com");
@@ -57,7 +64,7 @@ class LoginFrame extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Input Email
+        // Komponen Input Email
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel lblEmail = new JLabel("Email:");
@@ -69,7 +76,7 @@ class LoginFrame extends JFrame {
         tfEmail = new RoundedTextField(15);
         rightPanel.add(tfEmail, gbc);
 
-        // Input Password
+        // Komponen Input Password
         gbc.gridy = 2;
         JLabel lblPassword = new JLabel("Password:");
         lblPassword.setForeground(Color.BLACK);
@@ -130,6 +137,10 @@ class MainFrame extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
+    /**
+     * Konstruktor untuk MainFrame.
+     * @param userEmail email pengguna yang sedang login.
+     */
     public MainFrame(String userEmail) {
         setTitle("Cek Ongkir");
         ImageIcon icon = new ImageIcon("src/download (10).png");
@@ -139,6 +150,7 @@ class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        // Panel kiri dengan gradien
         JPanel leftPanel = new GradientPanel(new Color(255, 169, 76), new Color(255, 71, 140));
         leftPanel.setLayout(new GridBagLayout());
         JLabel leftLabel = new JLabel("WELCOME");
@@ -146,12 +158,13 @@ class MainFrame extends JFrame {
         leftLabel.setFont(new Font("Arial", Font.BOLD, 30));
         leftPanel.add(leftLabel);
 
+        // Panel kanan untuk input dan hasil
         JPanel rightPanel = new GradientPanel(new Color(251, 233, 214), new Color(251, 214, 228));
         rightPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Input alamat asal
+        // Komponen Input alamat asal
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel lblAsal = new JLabel("Alamat Asal:");
@@ -163,7 +176,7 @@ class MainFrame extends JFrame {
         tfAsal = new RoundedTextField(15);
         rightPanel.add(tfAsal, gbc);
 
-        // Input alamat tujuan
+        // Komponen Input alamat tujuan
         gbc.gridy = 2;
         JLabel lblTujuan = new JLabel("Alamat Tujuan:");
         lblTujuan.setForeground(Color.BLACK);
@@ -174,7 +187,7 @@ class MainFrame extends JFrame {
         tfTujuan = new RoundedTextField(15);
         rightPanel.add(tfTujuan, gbc);
 
-        // Input berat barang
+        // Komponen Input berat barang
         gbc.gridy = 4;
         JLabel lblBerat = new JLabel("Berat Barang (kg):");
         lblBerat.setForeground(Color.BLACK);
@@ -248,6 +261,11 @@ class GradientPanel extends JPanel {
     private final Color startColor;
     private final Color endColor;
 
+    /**
+     * Konstruktor untuk GradientPanel.
+     * @param startColor warna awal gradien.
+     * @param endColor warna akhir gradien.
+     */
     public GradientPanel(Color startColor, Color endColor) {
         this.startColor = startColor;
         this.endColor = endColor;
@@ -267,6 +285,10 @@ class GradientPanel extends JPanel {
  * Kelas untuk membuat tombol dengan sudut melengkung dan gradien warna.
  */
 class RoundedButton extends JButton {
+    /**
+     * Konstruktor untuk RoundedButton.
+     * @param text teks tombol.
+     */
     public RoundedButton(String text) {
         super(text);
         setContentAreaFilled(false);
@@ -280,10 +302,12 @@ class RoundedButton extends JButton {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // Gradien Latar Belakang
         GradientPaint gradient = new GradientPaint(0, 0, new Color(255, 169, 76), getWidth(), getHeight(), new Color(255, 71, 140));
         g2.setPaint(gradient);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), getHeight(), getHeight());
 
+        // Border tombol
         g2.setColor(new Color(255, 71, 140));
         g2.drawRoundRect(0, 0, getWidth() + 1, getHeight() + 1, getHeight(), getHeight());
 
@@ -297,13 +321,13 @@ class RoundedButton extends JButton {
  * Kelas untuk membuat text field dengan sudut melengkung.
  */
 class RoundedTextField extends JTextField {
-    private int arcWidth = 20;
-    private int arcHeight = 20;
+    private int arcWidth = 20; // Lebar sudut lengkung
+    private int arcHeight = 20; // Tinggi sudut lengkung
 
     public RoundedTextField(int columns) {
         super(columns);
-        setOpaque(false);
-        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        setOpaque(false); // Nonaktifkan pengisian latar belakang default
+        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Margin internal teks
     }
 
     @Override
@@ -311,9 +335,11 @@ class RoundedTextField extends JTextField {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // Latar belakang teksfield
         g2.setColor(Color.WHITE);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcWidth, arcHeight);
 
+        // Gradien latar belakang border
         GradientPaint gradient = new GradientPaint(0, 0, new Color(255, 169, 76), getWidth(), getHeight() , new Color(255, 71, 140));
         g2.setPaint(gradient);
         g2.drawRoundRect(0, 0, getWidth() + 1, getHeight() - 1, arcWidth, arcHeight);
@@ -328,13 +354,13 @@ class RoundedTextField extends JTextField {
  * Kelas untuk membuat password field dengan sudut melengkung.
  */
 class RoundedPasswordField extends JPasswordField {
-    private int arcWidth = 20;
-    private int arcHeight = 20;
+    private int arcWidth = 20; // Lebar sudut lengkung
+    private int arcHeight = 20; // Tinggi sudut lengkung
 
     public RoundedPasswordField(int columns) {
         super(columns);
-        setOpaque(false);
-        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        setOpaque(false); // Nonaktifkan pengisian latar belakang default
+        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Margin internal teks
     }
 
     @Override
@@ -342,9 +368,11 @@ class RoundedPasswordField extends JPasswordField {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // Latar belakang
         g2.setColor(Color.WHITE);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcWidth, arcHeight);
 
+        // Gradien latar belakang border
         GradientPaint gradient = new GradientPaint(0, 0, new Color(255, 169, 76), getWidth(), getHeight(), new Color(255, 71, 140));
         g2.setPaint(gradient);
         g2.drawRoundRect(0, 0, getWidth() + 1, getHeight() - 1, arcWidth, arcHeight);
