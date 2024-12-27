@@ -1,0 +1,84 @@
+import org.junit.jupiter.api.*;
+import javax.swing.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AplikasiOngkirTest {
+
+    @Test
+    void testLoginFrameInitialization() {
+        LoginFrame loginFrame = new LoginFrame();
+        assertNotNull(loginFrame.tfEmail);
+        assertNotNull(loginFrame.pfPassword);
+        assertNotNull(loginFrame.btnLogin);
+        assertEquals("https//AplikasiCekOnkosKirim.com", loginFrame.getTitle());
+        assertEquals(600, loginFrame.getWidth());
+        assertEquals(400, loginFrame.getHeight());
+    }
+
+    @Test
+    void testLoginValidationEmptyFields() {
+        LoginFrame loginFrame = new LoginFrame();
+        loginFrame.tfEmail.setText("");
+        loginFrame.pfPassword.setText("");
+
+        JButton btnLogin = loginFrame.btnLogin;
+        btnLogin.doClick();
+
+        assertEquals(JOptionPane.ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Test
+    void testLoginValidationInvalidEmail() {
+        LoginFrame loginFrame = new LoginFrame();
+        loginFrame.tfEmail.setText("invalidemail");
+        loginFrame.pfPassword.setText("password");
+
+        JButton btnLogin = loginFrame.btnLogin;
+        btnLogin.doClick();
+
+        assertEquals(JOptionPane.ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Test
+    void testMainFrameInitialization() {
+        MainFrame mainFrame = new MainFrame("test@gmail.com");
+        assertNotNull(mainFrame.tfAsal);
+        assertNotNull(mainFrame.tfTujuan);
+        assertNotNull(mainFrame.tfBerat);
+        assertNotNull(mainFrame.btnCekOngkir);
+        assertNotNull(mainFrame.lblHarga);
+        assertEquals("Cek Ongkir", mainFrame.getTitle());
+    }
+
+    @Test
+    void testCekOngkirValidInput() {
+        MainFrame mainFrame = new MainFrame("test@gmail.com");
+        mainFrame.tfBerat.setText("2");
+        mainFrame.btnCekOngkir.doClick();
+        assertEquals("Harga: Rp 10000.0", mainFrame.lblHarga.getText());
+    }
+
+    @Test
+    void testCekOngkirInvalidInput() {
+        MainFrame mainFrame = new MainFrame("test@gmail.com");
+        mainFrame.tfBerat.setText("abc");
+        mainFrame.btnCekOngkir.doClick();
+        assertEquals(JOptionPane.ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Test
+    void testTambahKeTabel() {
+        MainFrame mainFrame = new MainFrame("test@gmail.com");
+        mainFrame.tfAsal.setText("Jakarta");
+        mainFrame.tfTujuan.setText("Surabaya");
+        mainFrame.tfBerat.setText("3");
+
+        mainFrame.btnTambah.doClick();
+        assertEquals(1, mainFrame.table.getRowCount());
+        assertEquals("test@gmail.com", mainFrame.table.getValueAt(0, 0));
+        assertEquals("Jakarta", mainFrame.table.getValueAt(0, 1));
+        assertEquals("Surabaya", mainFrame.table.getValueAt(0, 2));
+        assertEquals(3.0, mainFrame.table.getValueAt(0, 3));
+        assertEquals(15000.0, mainFrame.table.getValueAt(0, 4));
+    }
+}
