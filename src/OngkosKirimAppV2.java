@@ -1,15 +1,20 @@
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.*;
-
+/**
+ * AplikasiOngkir
+ * Program ini merupakan aplikasi untuk mengecek ongkos kirim berbasis GUI
+ * menggunakan Java Swing. Aplikasi memiliki fitur login sederhana dan kalkulasi
+ * biaya pengiriman berdasarkan berat barang.
+ *@author RAMAHAN & Revaldo Ramadana
+ */
 public class AplikasiOngkir {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
 }
 
+/**
+ * LoginFrame
+ * Frame untuk menangani proses login pengguna.
+ */
 class LoginFrame extends JFrame {
     private JTextField tfEmail;
     private JPasswordField pfPassword;
@@ -17,7 +22,8 @@ class LoginFrame extends JFrame {
     private JButton btnLogin;
 
     public LoginFrame() {
-        setTitle("https//AplikasiCekOnkosKirim.com");
+        // Pengaturan dasar frame
+        setTitle("https://AplikasiCekOnkosKirim.com");
         ImageIcon icon = new ImageIcon("src/download (10).png");
         setIconImage(icon.getImage());
         setSize(600, 400);
@@ -25,6 +31,7 @@ class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        // Panel kiri dengan gradien dan label selamat datang
         JPanel leftPanel = new GradientPanel(new Color(255, 169, 76), new Color(255, 71, 140));
         leftPanel.setLayout(new GridBagLayout());
         JLabel leftLabel = new JLabel("WELCOME");
@@ -32,11 +39,13 @@ class LoginFrame extends JFrame {
         leftLabel.setFont(new Font("Arial", Font.BOLD, 30));
         leftPanel.add(leftLabel);
 
+        // Panel kanan untuk form login
         JPanel rightPanel = new GradientPanel(new Color(251, 233, 214), new Color(251, 214, 228));
         rightPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
+        // Input Email
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel lblEmail = new JLabel("Email:");
@@ -47,6 +56,7 @@ class LoginFrame extends JFrame {
         tfEmail = new RoundedTextField(15);
         rightPanel.add(tfEmail, gbc);
 
+        // Input Password
         gbc.gridy = 2;
         JLabel lblPassword = new JLabel("Password:");
         lblPassword.setForeground(Color.BLACK);
@@ -57,6 +67,7 @@ class LoginFrame extends JFrame {
         pfPassword.setEchoChar('*');
         rightPanel.add(pfPassword, gbc);
 
+        // Checkbox untuk menampilkan password
         gbc.gridy = 4;
         cbShowPassword = new JCheckBox("Show Password");
         cbShowPassword.setFont(new Font("Arial", Font.BOLD, 10));
@@ -65,21 +76,12 @@ class LoginFrame extends JFrame {
         cbShowPassword.addActionListener(e -> pfPassword.setEchoChar(cbShowPassword.isSelected() ? '\0' : '*'));
         rightPanel.add(cbShowPassword, gbc);
 
+        // Tombol login
         gbc.gridy = 6;
         btnLogin = new RoundedButton("Login");
         btnLogin.setFont(new Font("Arial", Font.BOLD, 14));
         btnLogin.setPreferredSize(new Dimension(103, 25));
         btnLogin.setForeground(new Color(255,246,233));
-        btnLogin.addActionListener(e -> {
-            if (!tfEmail.getText().isEmpty() && pfPassword.getPassword().length > 0) {
-                new MainFrame(tfEmail.getText()).setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Isi semua kolom!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        rightPanel.add(btnLogin, gbc);
-
         btnLogin.addActionListener(e -> {
             String email = tfEmail.getText().trim();
             char[] password = pfPassword.getPassword();
@@ -95,6 +97,7 @@ class LoginFrame extends JFrame {
         });
         rightPanel.add(btnLogin, gbc);
 
+        // Split pane untuk membagi area kiri dan kanan
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
         splitPane.setDividerLocation(200);
         splitPane.setDividerSize(0);
@@ -102,6 +105,10 @@ class LoginFrame extends JFrame {
     }
 }
 
+/**
+ * MainFrame
+ * Frame utama untuk aplikasi, menangani input data pengiriman dan kalkulasi harga.
+ */
 class MainFrame extends JFrame {
     private JTextField tfAsal, tfTujuan, tfBerat;
     private JButton btnCekOngkir, btnTambah;
@@ -130,6 +137,7 @@ class MainFrame extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
+        // Input alamat asal
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel lblAsal = new JLabel("Alamat Asal:");
@@ -140,6 +148,7 @@ class MainFrame extends JFrame {
         tfAsal = new RoundedTextField(15);
         rightPanel.add(tfAsal, gbc);
 
+        // Input alamat tujuan
         gbc.gridy = 2;
         JLabel lblTujuan = new JLabel("Alamat Tujuan:");
         lblTujuan.setForeground(Color.BLACK);
@@ -149,6 +158,7 @@ class MainFrame extends JFrame {
         tfTujuan = new RoundedTextField(15);
         rightPanel.add(tfTujuan, gbc);
 
+        // Input berat barang
         gbc.gridy = 4;
         JLabel lblBerat = new JLabel("Berat Barang (kg):");
         lblBerat.setForeground(Color.BLACK);
@@ -158,6 +168,7 @@ class MainFrame extends JFrame {
         tfBerat = new RoundedTextField(15);
         rightPanel.add(tfBerat, gbc);
 
+        // Tombol cek ongkir
         gbc.gridy = 6;
         btnCekOngkir = new RoundedButton("Cek Ongkir");
         btnCekOngkir.setFont(new Font("Arial", Font.BOLD, 14));
@@ -180,6 +191,7 @@ class MainFrame extends JFrame {
             }
         });
 
+        // Tombol tambah ke tabel
         gbc.gridy = 8;
         btnTambah = new RoundedButton("Tambah ke Tabel");
         btnTambah.setFont(new Font("Arial", Font.BOLD, 14));
@@ -187,6 +199,7 @@ class MainFrame extends JFrame {
         btnTambah.setForeground(new Color(255,246,233));
         rightPanel.add(btnTambah, gbc);
 
+        // Tabel untuk menampilkan data
         gbc.gridy = 9;
         tableModel = new DefaultTableModel(new String[]{"Email/HP", "Asal", "Tujuan", "Berat (kg)", "Harga"}, 0);
         table = new JTable(tableModel);
@@ -209,6 +222,10 @@ class MainFrame extends JFrame {
     }
 }
 
+/**
+ * GradientPanel
+ * Panel dengan gradien warna untuk meningkatkan estetika antarmuka.
+ */
 class GradientPanel extends JPanel {
     private final Color startColor;
     private final Color endColor;
@@ -227,6 +244,10 @@ class GradientPanel extends JPanel {
     }
 }
 
+/**
+ * RoundedButton
+ * Kelas untuk membuat tombol dengan sudut melengkung dan gradien warna.
+ */
 class RoundedButton extends JButton {
     public RoundedButton(String text) {
         super(text);
@@ -241,12 +262,10 @@ class RoundedButton extends JButton {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Gradien latar belakang
         GradientPaint gradient = new GradientPaint(0, 0, new Color(255, 169, 76), getWidth(), getHeight(), new Color(255, 71, 140));
         g2.setPaint(gradient);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), getHeight(), getHeight());
 
-        // Border tombol (opsional)
         g2.setColor(new Color(255, 71, 140));
         g2.drawRoundRect(0, 0, getWidth() + 1, getHeight() + 1, getHeight(), getHeight());
 
@@ -255,6 +274,10 @@ class RoundedButton extends JButton {
     }
 }
 
+/**
+ * RoundedTextField
+ * Kelas untuk membuat text field dengan sudut melengkung.
+ */
 class RoundedTextField extends JTextField {
     private int arcWidth = 20;
     private int arcHeight = 20;
@@ -280,12 +303,12 @@ class RoundedTextField extends JTextField {
         g2.dispose();
         super.paintComponent(g);
     }
-
-    @Override
-    public void setBorder(Border border) {
-    }
 }
 
+/**
+ * RoundedPasswordField
+ * Kelas untuk membuat password field dengan sudut melengkung.
+ */
 class RoundedPasswordField extends JPasswordField {
     private int arcWidth = 20;
     private int arcHeight = 20;
@@ -293,7 +316,7 @@ class RoundedPasswordField extends JPasswordField {
     public RoundedPasswordField(int columns) {
         super(columns);
         setOpaque(false);
-        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Margin internal teks
+        setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
     }
 
     @Override
@@ -310,9 +333,5 @@ class RoundedPasswordField extends JPasswordField {
 
         g2.dispose();
         super.paintComponent(g);
-    }
-
-    @Override
-    public void setBorder(Border border) {
     }
 }
